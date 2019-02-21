@@ -28,7 +28,7 @@ public class CityDaoImpl implements CityDao {
 		}
 	}
 
-//====================================================================================================
+//1====================================================================================================
 
 	@Override
 	public City findById(int id) {
@@ -59,26 +59,21 @@ public class CityDaoImpl implements CityDao {
 		return new City(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
 	}
 
-//====================================================================================================
+//2====================================================================================================
 
 	@Override
 	public List<City> findByCode(String code) {
 
-		List<City> result = new ArrayList<>();
-
 		try (Connection conn = DatabaseAlt.getConnection();
 				PreparedStatement statement = creatPreparedStatementFindByCode(conn, code);
 				ResultSet rs = statement.executeQuery()) {
-			while (rs.next()) {
-				return creatCityFormatResultList(rs);
-			}
+
+			return creatCityFormatResultList(rs);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		}
-
-		return result;
+		return null;
 	}
 
 	private PreparedStatement creatPreparedStatementFindByCode(Connection conn, String Code) throws SQLException {
@@ -86,27 +81,21 @@ public class CityDaoImpl implements CityDao {
 		statement.setString(1, Code);
 		return statement;
 	}
-
-//====================================================================================================
+//3====================================================================================================
 
 	@Override
 	public List<City> findByName(String name) {
 
-		List<City> result = new ArrayList<>();
-
 		try (Connection conn = DatabaseAlt.getConnection();
 				PreparedStatement statement = creatPreparedStatementFindByName(conn, name);
 				ResultSet rs = statement.executeQuery()) {
-			while (rs.next()) {
-				return creatCityFormatResultList(rs);
-			}
+
+			return creatCityFormatResultList(rs);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		}
-
-		return result;
+		return null;
 	}
 
 	private PreparedStatement creatPreparedStatementFindByName(Connection conn, String Name) throws SQLException {
@@ -115,11 +104,9 @@ public class CityDaoImpl implements CityDao {
 		return statement;
 	}
 
-//====================================================================================================
+//4====================================================================================================
 	@Override
 	public List<City> findAll() {
-
-		List<City> result = new ArrayList<>();
 
 		try (Connection conn = DatabaseAlt.getConnection();
 				PreparedStatement statement = creatPreparedStatementFindAll(conn);
@@ -130,7 +117,7 @@ public class CityDaoImpl implements CityDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return result;
+		return null;
 	}
 
 	private PreparedStatement creatPreparedStatementFindAll(Connection conn) throws SQLException {
@@ -147,7 +134,7 @@ public class CityDaoImpl implements CityDao {
 		}
 		return result;
 	}
-//====================================================================================================
+//5====================================================================================================
 
 	@Override
 	public City add(City city) {
@@ -161,7 +148,6 @@ public class CityDaoImpl implements CityDao {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 
 	private PreparedStatement creatPreparedStatement(Connection conn, City city) throws SQLException {
@@ -174,7 +160,7 @@ public class CityDaoImpl implements CityDao {
 		return statement;
 	}
 
-//====================================================================================================
+//6====================================================================================================
 
 	@Override
 	public City update(City city) {
@@ -188,10 +174,8 @@ public class CityDaoImpl implements CityDao {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 
-	@SuppressWarnings("unused")
 	private PreparedStatement creatPreparedStatementUpdateCity(Connection conn, City city) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement("update city set name = ? where id = ?");
 		statement.setString(1, city.getName());
@@ -199,7 +183,7 @@ public class CityDaoImpl implements CityDao {
 		return statement;
 	}
 
-//====================================================================================================
+//7====================================================================================================
 
 	@Override
 	public int delete(City city) {
@@ -212,7 +196,6 @@ public class CityDaoImpl implements CityDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return 0;
 	}
 

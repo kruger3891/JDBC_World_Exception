@@ -22,13 +22,13 @@ public class App
     	
     		switch(op) {
             case 1:
-            	System.out.println(dao.findById(34));
+            	System.out.println(dao.findById(1));
             	break;
             case 2:
             	dao.findByCode("%BRA%").forEach(System.out::println);
             	break;
             case 3:
-            	dao.findByName("%Ti%").forEach(System.out::println);
+            	dao.findByName("%sw%").forEach(System.out::println);
             	break;
             case 4:
             	dao.findAll().forEach(System.out::println);
