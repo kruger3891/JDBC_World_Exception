@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import Project.jdbc_World.data.models.City;
 
@@ -78,7 +77,7 @@ public class CityDaoImpl implements CityDao {
 
 	private PreparedStatement creatPreparedStatementFindByCode(Connection conn, String Code) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city WHERE CountryCode like ?");
-		statement.setString(1, Code);
+		statement.setString(1, Code + "%");
 		return statement;
 	}
 //3====================================================================================================
@@ -100,7 +99,7 @@ public class CityDaoImpl implements CityDao {
 
 	private PreparedStatement creatPreparedStatementFindByName(Connection conn, String Name) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city WHERE Name like ?");
-		statement.setString(1, Name);
+		statement.setString(1, Name + "%");
 		return statement;
 	}
 
@@ -177,9 +176,13 @@ public class CityDaoImpl implements CityDao {
 	}
 
 	private PreparedStatement creatPreparedStatementUpdateCity(Connection conn, City city) throws SQLException {
-		PreparedStatement statement = conn.prepareStatement("update city set name = ? where id = ?");
+		PreparedStatement statement = conn
+				.prepareStatement("update city set name = ?, countryCode= ?, district=?, population= ? where id = ?");
 		statement.setString(1, city.getName());
-		statement.setInt(2, city.getId());
+		statement.setString(2, city.getCountryCode());
+		statement.setString(3, city.getDistrict());
+		statement.setInt(4, city.getPopulation());
+		statement.setInt(5, city.getId());
 		return statement;
 	}
 
